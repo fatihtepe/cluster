@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+
+  name: sampleweb-deployment
+
+  labels:
+
+    app: sampleweb
+
+spec:
+
+  replicas: 3
+
+  selector:
+
+    matchLabels:
+
+      app: sampleweb
+
+  template:
+
+    metadata:
+
+      labels:
+
+        app: sampleweb
+
+    spec:
+
+      containers:
+
+      - name: sampleweb
+
+        image: fatihtepe/merhaba
+
+
