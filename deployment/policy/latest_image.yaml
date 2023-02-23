@@ -1,0 +1,23 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: restrict-latest-image
+spec:
+  validationFailureAction: enforce
+  rules:
+  - name: restrict-latest-image
+    match:
+      resources:
+      - kind: Deployment
+    validate:
+      message: Deployment uses the latest image, which is not allowed
+      pattern: |
+        resources:
+        - kind: Deployment
+        apiVersion: apps/v1
+        path: spec/template/spec/containers/*/image
+        value: |
+          function(value) {
+            return !value.endsWith(":latest");
+          }
+      failureAction: enforce
